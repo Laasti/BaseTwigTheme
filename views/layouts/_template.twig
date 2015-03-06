@@ -1,0 +1,89 @@
+<!doctype html>
+{% block html_tag %}
+<!--[if IE 8 ]>    <html lang="{{ locale }}" class="no-js ie8 {{ html_classes|join(' ') }}"> <![endif]-->
+    <!--[if (gt IE 8)|!(IE)]><!--> <html lang="{{ locale }}" class="no-js {{ html_classes|join(' ') }}"> <!--<![endif]-->
+    {% endblock %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{ title_tag }}</title>
+        {% if meta.description is defined %}
+            <meta name="description" content="{{ meta.description }}">
+        {% endif %}
+        <meta name="robots" content="{{ meta.robots|default('noindex,nofollow') }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% if meta.canonical is defined %}
+            <link rel="canonical" href="{{ meta.canonical }}">
+        {% endif %}
+        {% if meta.facebook is defined %}
+            <meta property="og:title" content="{{ meta.facebook.title|default(title_tag) }}"/>
+            <meta property="og:type" content="{{ meta.facebook.type|default("article") }}"/>
+            <meta property="og:image" content="{{ meta.facebook.image }}"/>
+            <meta property="og:url" content="{{ meta.facebook.url }}"/>
+            <meta property="og:description" content="{{ meta.facebook.description|default(meta.description) }}"/>
+        {% endif %}
+        {% if meta.twitter is defined %}
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:url" content="{{ meta.twitter.url }}">
+            <meta name="twitter:title" content="{{ meta.twitter.title|default(title_tag)}}">
+            <meta name="twitter:description" content="{{ meta.twitter.description|default(meta.description) }}">
+            <meta name="twitter:image" content="{{ meta.twitter.image }}">
+        {% endif %}
+
+        {% if meta.apple_icon is defined %}
+            <link rel="apple-touch-icon" href="{{ meta.apple_icon }}">
+        {% endif %}
+        <!-- Place favicon.ico in the root directory -->
+        {% block stylesheets %}
+            <!-- bower:css -->
+            <link rel="stylesheet" href="{{ assets_path }}vendor/normalize.css">
+            <!-- endinject -->
+        {% endblock %}
+        {% block scripts_head %}
+        {% endblock %}
+    </head>
+    {% block body_tag %}
+        <body class="{{ body_classes|join(' ') }}">
+        {% endblock %}
+        {% block scripts_body_start %}
+        {% endblock %}
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        {% block body %}
+            <!-- Add your site or application content here -->
+            <p>Hello world! This is my version of HTML5 Boilerplate.</p>
+        {% endblock %}
+
+        {% block scripts_body_end %}
+            <!-- bower:js -->
+            <script type="text/javascript" src="{{ assets_path }}vendor/jquery.js"></script>
+            <script type="text/javascript" src="{{ assets_path }}vendor/underscore.js"></script>
+            <script type="text/javascript" src="{{ assets_path }}vendor/backbone.js"></script>
+            <script type="text/javascript" src="{{ assets_path }}vendor/jquery.cycle2.js"></script>
+            <script type="text/javascript" src="{{ assets_path }}vendor/jquery.cycle2.swipe.min.js"></script>
+            <!-- endinject -->
+        {% endblock %}
+
+        {% if ga_code is defined %}
+            <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+            <script>
+                (function (b, o, i, l, e, r) {
+                    b.GoogleAnalyticsObject = l;
+                    b[l] || (b[l] =
+                            function () {
+                                (b[l].q = b[l].q || []).push(arguments)
+                            });
+                    b[l].l = +new Date;
+                    e = o.createElement(i);
+                    r = o.getElementsByTagName(i)[0];
+                    e.src = '//www.google-analytics.com/analytics.js';
+                    r.parentNode.insertBefore(e, r)
+                }(window, document, 'script', 'ga'));
+                ga('create', {{ ga_code }}, 'auto');
+                ga('send', 'pageview');
+            </script>
+        {% endif %}
+    </body>
+</html>

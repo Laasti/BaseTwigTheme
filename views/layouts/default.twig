@@ -1,0 +1,12 @@
+{% extends "_template.twig" %}
+
+{% block body %}
+    {% include "../includes/menu.twig" with {menu: menu} %}
+    {% include "../includes/breadcrumb.twig" with {breadcrumb: breadcrumb} %}
+    <section id="main">
+        {% block content %}
+            What you see here is the default content.
+        {% endblock %}
+    </section>
+    
+{% endblock %}

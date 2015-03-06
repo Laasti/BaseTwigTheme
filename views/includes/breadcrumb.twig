@@ -1,0 +1,38 @@
+{#
+
+This file is used to build breadcrumbs.
+
+Data format for a breadcrumb:
+
+    breadcrumb: {
+        separator: " / ",
+        attributes: {id: "breadcrumb"},
+        classes: [],
+        active_classes: ["active"],
+        items: [
+            {
+                url: "http://domain.com",
+                name: "Menuitem Name", //Uses trans filter for easy translation
+                classes: ["class1", "class2"],
+                attributes: {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, //Produces readonly="readonly"
+                    "data-sort": "true", //Produces data-sort="true"
+                }
+            }, (...)
+        ]
+    }
+#}
+{% import "../_helpers.twig" as helpers %}
+
+{% block breadcrumb %}
+<nav class="{{breadcrumb.classes|default(['breadcrumb'])|join(" ")}}" {{ helpers.attributes(breadcrumb.attributes|default([])) }}>
+    {% for crumb in breadcrumb.items %}
+        {% if not loop.last %}
+            <a href="{{ crumb.url }}" class="{{ crumb.classes|default([])|join(' ') }}" {{ helpers.attributes(crumb.attributes|default([])) }}>{{ crumb.name|trans }}</a>{{ breadcrumb.separator|default(' / ') }}
+        {% else %}
+            <strong class="{{ breadcrumb.active_classes|default([])|join(' ') }}" {{ helpers.attributes(crumb.attributes|default([])) }}>{{ crumb.name|trans }}</strong>
+        {% endif %}
+    {% endfor %}
+</nav>
+{% endblock %}

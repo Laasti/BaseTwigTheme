@@ -1,0 +1,67 @@
+{#
+
+This file is used to build forms.
+
+Data format for a form:
+
+    form: {
+        action: "",
+        method: "post",
+        attributes: {enctype: "multipart/form-data"},
+        classes: [],
+        active_classes: ["active"],
+        sections: [
+            {
+                label: "Personal Information",
+                classes: ["class1", "class2"],
+                attributes: {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, //Produces readonly="readonly"
+                    "data-sort": "true", //Produces data-sort="true"
+                },
+                items: [
+                    {
+                       
+                    },
+                ]
+            }, (...)
+        ]
+    }
+#}
+{% import "../_helpers.twig" as helpers %}
+
+{% macro form_section(section) %}
+    {% import _self as self %}
+    <fieldset class="{{ section.classes|default([])|join(' ') }}" {{ helpers.attributes(section.attributes|default([])) }}>
+        <legend>{{ section.label }}</legend>
+        {% for item in section.items %}
+            {{ self.form_item(item) }}
+        {% endfor %}
+    </fieldset>
+{% endmacro %}
+
+{% macro form_error(error) %}
+    {% import _self as self %}
+    <span class="error">{{ error }}</span>
+{% endmacro %}
+{# TODO: make classes and attributes for labels and inputs #}
+{% macro form_item(item) %}
+    {% import _self as self %}
+    <div class="{{ item.classes|default([])|join(' ') }}" {{ helpers.attributes(item.attributes|default([])) }}>
+        {{ attribute(self, ("type_" ~ item.type), [item]) }}
+    </div>
+{% endmacro %}
+
+{% macro type_text(item) %}
+    <label for="{{ item.id|default(item.name) }}">{{ item.label }}</label>
+    <input type="text" value="" name="{{ item.name }}" />
+{% endmacro %}
+
+{% block form %}
+    {% import _self as self %}
+    <form action="{{ form.action }}" method="{{ form.method|default('post') }}" class="{{ form.classes|default([])|join(' ') }}" {{ helpers.attributes(form.attributes|default([])) }}>
+        {% for section in form.sections %}
+            {{ self.form_section(section) }}
+        {% endfor %}
+    </form>
+{% endblock %}

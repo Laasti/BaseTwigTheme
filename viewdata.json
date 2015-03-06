@@ -1,0 +1,89 @@
+{
+    "assets_path": "assets/",
+    "breadcrumb": {
+        "separator": " / ",
+        "attributes": {"id": "breadcrumb"},
+        "classes": [],
+        "active_classes": ["active"],
+        "items": [
+            {
+                "url": "http://domain.com",
+                "name": "Home", 
+                "classes": ["class1", "class2"],
+                "attributes": {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, 
+                    "data-sort": "true"
+                }
+            },
+            {
+                "url": "http://domain.com",
+                "name": "Breadcumb Name", 
+                "classes": ["class1", "class2"],
+                "attributes": {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, 
+                    "data-sort": "true"
+                }
+            }
+        ]
+    },
+    "menu": {
+        "classes": ["my-menu-class"],
+        "items": [
+            {
+                "url": "http://domain.com",
+                "name": "Menuitem Name 2", 
+                "classes": ["class1", "class2"],
+                "menu": {
+                    "classes": ["my-menu-class"],
+                    "items": [
+                        {
+                            "url": "http://domain.com",
+                            "name": "Menuitem Name",
+                            "classes": ["class1", "class2"],
+                            "attributes": {
+                                "placeholder": "My Placeholder",
+                                "readonly": true, 
+                                "data-sort": "true"
+                            }
+                        }
+                    ]
+                },
+                "attributes": {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, 
+                    "data-sort": "true"
+                }
+            }
+        ]
+    },
+    "form": {
+        "action": "",
+        "method": "post",
+        "attributes": {"enctype": "multipart/form-data"},
+        "classes": [],
+        "active_classes": ["active"],
+        "sections": [
+            {
+                "label": "Personal Information",
+                "classes": ["class1", "class2"],
+                "attributes": {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, 
+                    "data-sort": "true"
+                },
+                "items": [
+                    {
+                       "type": "text",
+                       "label":"E-mail",
+                       "name": "email",
+                       "id": "email-1",
+                       "classes": [],
+                       "attributes": {}
+                    }
+                ]
+            }
+        ]
+    }
+}

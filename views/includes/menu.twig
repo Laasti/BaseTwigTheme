@@ -1,0 +1,47 @@
+{#
+
+This file is used to build menus. It is recursive, it calls itself when items property is not empty
+
+Data format for a menu:
+
+    menu: {
+        classes: ["my-menu-class"],
+        items: [
+            {
+                url: "http://domain.com",
+                name: "Menuitem Name", //Uses trans filter for easy translation
+                classes: ["class1", "class2"],
+                link_classes: ["class1", "class2"],
+                items: [],
+                attributes: {
+                    "placeholder": "My Placeholder",
+                    "readonly": true, //Produces readonly="readonly"
+                    "data-sort": "true", //Produces data-sort="true"
+                }
+            },...
+        ]
+    }
+#}
+{% import "../_helpers.twig" as helpers %}
+{% import _self as self %}
+
+{% macro menu(menu) %}
+{% import _self as self %}
+<nav class="{{menu.classes|default(['menu'])|join(" ")}}" {{ helpers.attributes(menu.attributes|default([])) }}>
+    <ul>
+        {% for menuitem in menu.items %}
+            <li class="{{ menuitem.classes|default(['menuitem'])|join(' ') }}{{ menuitem.items|length > 0 ? ' has-children' : '' }}">
+                {% set attr = menuitem.attributes|default([]) -%}
+                <a href="{{ menuitem.url }}" class="{{menu.link_classes|default([])|join(" ")}}" {{ helpers.attributes(attr) }}>{{ menuitem.name|trans }}</a>
+                {% if menuitem.menu is defined and menuitem.menu.items|length > 0 %}
+                    {{ self.menu(menuitem.menu) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}
+
+{% block menu %}
+    {{ self.menu(menu) }}
+{% endblock %}
